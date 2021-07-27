@@ -17,6 +17,7 @@ export const TaskDescriptionStyled = styled.div`
 export const TagsContainerStyled = styled.div`
   display: flex;
   height: fit-content;
+  flex-wrap: wrap;
   width: 100%
 `
 

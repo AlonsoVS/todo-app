@@ -15,7 +15,8 @@ const TaskListStyled = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: fit-content;
+  max-height: 100%;
   padding: 1rem;
   overflow: auto;
   width: 100%;

@@ -23,7 +23,7 @@ export const Title = styled.span`
 
 
 export const TaskMainContainerStyled = styled.div`
-  align-items: center;
+  align-items: start;
   background: ${props => props.theme.primary};
   display: grid;
   gap: 0.5rem 1rem;

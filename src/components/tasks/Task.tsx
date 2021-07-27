@@ -8,16 +8,17 @@ const TaskDescription = styled(TaskDescriptionStyled)``
 const TagsContainer = styled(TagsContainerStyled)``
 const Tag = styled(TagStyled)``
 
-const Task:FC<TaskType> = ({ description, tag }) => {
+const Task:FC<TaskType> = ({ description, tags }) => {
   return (
     <TaskContainer>
       <TaskDescription>
         {description}
       </TaskDescription>
       <TagsContainer>
-        <Tag background='blue'>
-          {tag}
-        </Tag>
+        {tags.map((tag, index) => 
+          <Tag key={index} background='blue'>
+            {tag}
+          </Tag>)}
       </TagsContainer>
     </TaskContainer>
   )

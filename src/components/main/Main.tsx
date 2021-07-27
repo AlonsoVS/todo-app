@@ -10,8 +10,6 @@ const MainTitle = styled(Title)``
 
 const TaskMainContainer = styled(TaskMainContainerStyled)``
 
-const statusCodes = ['to do', 'in progress', 'completed'];
-
 type State = {
   todoTasks: Array<Task>
   inProgressTasks: Array<Task>
@@ -30,7 +28,7 @@ type UpdateAction = {
   action: string
 }
 
-const init = (initialState: State) => {
+const init = (initialState:State) => {
   return { ...initialState };
 }
 

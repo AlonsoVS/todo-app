@@ -1,5 +1,5 @@
 export type Task = {
   description:string
-  tag:string
+  tags:Array<string>
   status:string
 }

@@ -1,7 +1,8 @@
-import { FC, useEffect } from 'react'
+import { FC, useState } from 'react'
 import styled from 'styled-components'
 import TaskListStyled, { AddTaskButtonStyled, TaskListTitleStyled, TasksContainerStyled } from '../../styles/TaskListStyles'
 import { Task as TaskType } from '../types'
+import AddTaskForm from './AddTaskForm'
 import Task from './Task'
 
 const TaskListContainer = styled(TaskListStyled)``
@@ -17,13 +18,15 @@ type Props = {
 
 const TaskList:FC<Props> = ({ title, addTaskHandler, tasks }) => {
 
-  const handleAdd = () => {
-    const newTask:TaskType = {
-      description: 'New Task',
-      tag: 'any',
-      status: title
-    }
+  const [showingAdd, showAdd] = useState<boolean>(false);
+
+  const handleButtonClick = () => {
+    showAdd(() => true);
+  }
+
+  const handlerAdd = (newTask:TaskType) => {
     addTaskHandler(newTask);
+    showAdd(() => false);
   }
 
   return (
@@ -34,9 +37,13 @@ const TaskList:FC<Props> = ({ title, addTaskHandler, tasks }) => {
           <Task key={index} { ...task }/>
         )}
       </TasksContainer>
-      <AddTaskButton onClick={handleAdd}>
-        Add task
-      </AddTaskButton>
+      {showingAdd 
+        && 
+        <AddTaskForm taskStatus={title}  handlerDone={handlerAdd} />
+        || 
+        <AddTaskButton onClick={handleButtonClick} >
+          Add task
+        </AddTaskButton>}
     </TaskListContainer>
   )
 }
