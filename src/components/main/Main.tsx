@@ -4,6 +4,8 @@ import styled from "styled-components"
 import { Root, TaskMainContainerStyled, Title } from "../../styles/MainStyles"
 import TaskList from "../tasks/TaskList"
 import { Task } from "../types"
+import { v4 as uuidv4 } from "uuid";
+
 
 const MainRoot = styled(Root)``
 const MainTitle = styled(Title)``

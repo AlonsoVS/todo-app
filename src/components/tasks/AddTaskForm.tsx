@@ -1,8 +1,9 @@
 import { FC, useReducer, useState } from 'react'
 import { Task } from '../types';
 import NewTagForm from './NewTagForm';
-import AddDescriptionForm from './AddkDescriptionForm';
+import AddDescriptionForm from './AddDescriptionForm';
 import { DoneButtonStyled } from '../../styles/AddTaskFormsStyles';
+import { v4 as uuidv4 } from "uuid";
 
 const init = (task:Task) => {
   return { ...task };
@@ -19,6 +20,7 @@ type Props = {
 
 const AddTaskForm:FC<Props> = ({ taskStatus, handlerDone }) => {
   const initialTask:Task = {
+    id: uuidv4(),
     description: '',
     tags: [],
     status: taskStatus
