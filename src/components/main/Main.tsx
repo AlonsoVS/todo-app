@@ -1,5 +1,5 @@
 import { FC } from "hoist-non-react-statics/node_modules/@types/react"
-import { useState, useReducer } from "react"
+import { useReducer } from "react"
 import styled from "styled-components"
 import { Root, TaskMainContainerStyled, Title } from "../../styles/MainStyles"
 import TaskList from "../tasks/TaskList"

@@ -37,9 +37,9 @@ const TaskList:FC<Props> = ({ title, addTaskHandler, tasks }) => {
           <Task key={index} { ...task }/>
         )}
       </TasksContainer>
-      {showingAdd 
+      {(showingAdd 
         && 
-        <AddTaskForm taskStatus={title}  handlerDone={handlerAdd} />
+        <AddTaskForm taskStatus={title}  handlerDone={handlerAdd} />)
         || 
         <AddTaskButton onClick={handleButtonClick} >
           Add task

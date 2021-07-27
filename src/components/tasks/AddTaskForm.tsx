@@ -52,10 +52,10 @@ const AddTaskForm:FC<Props> = ({ taskStatus, handlerDone }) => {
 
   return (
     <>
-      {showingAddDescription && <AddDescriptionForm handleDone={handleAddDescription} />
+      {(showingAddDescription && <AddDescriptionForm handleDone={handleAddDescription} />)
       || <DoneButtonStyled onClick={handleTaskDone} >Save</DoneButtonStyled>}
-      {showingAddTag 
-        && <NewTagForm onTagDone={handleAddTag} />
+      {(showingAddTag 
+        && <NewTagForm onTagDone={handleAddTag} />)
         || <DoneButtonStyled onClick={() => showAddTag(() => true)}>Add tag</DoneButtonStyled>}
     </>
   )
