@@ -1,5 +1,5 @@
 import { FC } from "hoist-non-react-statics/node_modules/@types/react"
-import { useState } from "react"
+import { useState, useReducer } from "react"
 import styled from "styled-components"
 import { Root, TaskMainContainerStyled, Title } from "../../styles/MainStyles"
 import TaskList from "../tasks/TaskList"
@@ -12,26 +12,61 @@ const TaskMainContainer = styled(TaskMainContainerStyled)``
 
 const statusCodes = ['to do', 'in progress', 'completed'];
 
+type State = {
+  todoTasks: Array<Task>
+  inProgressTasks: Array<Task>
+  completedTasks: Array<Task>
+}
+
+const initialState:State = {
+  todoTasks: [],
+  inProgressTasks: [],
+  completedTasks: []
+}
+
+type UpdateAction = {
+  tasks: Array<Task>
+  status: string
+  action: string
+}
+
+const init = (initialState: State) => {
+  return { ...initialState };
+}
+
+const reducer = ( state: State, updateData: UpdateAction ) => {
+  switch (updateData.status) {
+    case 'to do':
+      if (updateData.action === 'add') {
+        return { ...state, todoTasks: state.todoTasks.concat(updateData.tasks) };
+      }
+      return { ...state, todoTasks: updateData.tasks };
+    case 'in progress':
+      if (updateData.action === 'add') {
+        return {  ...state, inProgressTasks: state.inProgressTasks.concat(updateData.tasks) };
+      }
+      return {  ...state, inProgressTasks: updateData.tasks };
+    case 'completed':
+      if (updateData.action === 'add') {
+        return { ...state, completedTasks: state.completedTasks.concat(updateData.tasks) };
+      }
+      return { ...state, completedTasks: updateData.tasks };
+    default:
+      throw new Error(`Can't update state: status code unknow!`);
+  }
+}
+
 const Main:FC = () => {
-  const [tasks, setTasks] = useState<Array<Task>>([]);
-  const [todoTasks, setTodoTasks] = useState<Array<Task>>([]);
-  const [inProgressTasks, setInProgressTasks] = useState<Array<Task>>([]);
-  const [completedTasks, setCompletedTasks] = useState<Array<Task>>([]);
+
+  const [state, dispatch] = useReducer(reducer, initialState, init);
 
   const addTask = (task:Task) => {
-    switch (task.status) {
-      case 'to do':
-        setTodoTasks(() => todoTasks.concat(task));
-        break;
-      case 'in progress':
-        setInProgressTasks(() => inProgressTasks.concat(task));
-        break;
-      case 'completed':
-        setCompletedTasks(() => completedTasks.concat(task));
-        break;
-      default:
-        alert('Error: task status is unknow!')
-    }
+    const updateData:UpdateAction = {
+      tasks: [task],
+      status: task.status,
+      action: 'add'
+    };
+    dispatch(updateData);
   }
 
   return (
@@ -41,15 +76,15 @@ const Main:FC = () => {
       <TaskList 
         title={'to do'} 
         addTaskHandler={addTask}
-        tasks={todoTasks} />
+        tasks={state.todoTasks} />
       <TaskList 
         title={'in progress'} 
         addTaskHandler={addTask}
-        tasks={inProgressTasks} />
+        tasks={state.inProgressTasks} />
       <TaskList 
         title={'completed'} 
         addTaskHandler={addTask}
-        tasks={completedTasks} />
+        tasks={state.completedTasks} />
       </TaskMainContainer>
     </MainRoot>
   )
