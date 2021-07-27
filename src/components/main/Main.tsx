@@ -40,17 +40,17 @@ const reducer = ( state: State, updateData: UpdateAction ) => {
       if (updateData.action === 'add') {
         return { ...state, todoTasks: state.todoTasks.concat(updateData.tasks) };
       }
-      return { ...state, todoTasks: updateData.tasks };
+      return { ...state, todoTasks: state.todoTasks.filter(task => task.id != updateData.tasks[0].id) };
     case 'in progress':
       if (updateData.action === 'add') {
         return {  ...state, inProgressTasks: state.inProgressTasks.concat(updateData.tasks) };
       }
-      return {  ...state, inProgressTasks: updateData.tasks };
+      return {  ...state, inProgressTasks: state.inProgressTasks.filter(task => task.id != updateData.tasks[0].id) };
     case 'completed':
       if (updateData.action === 'add') {
         return { ...state, completedTasks: state.completedTasks.concat(updateData.tasks) };
       }
-      return { ...state, completedTasks: updateData.tasks };
+      return { ...state, completedTasks: state.completedTasks.filter(task => task.id != updateData.tasks[0].id) };
     default:
       throw new Error(`Can't update state: status code unknow!`);
   }
@@ -69,6 +69,15 @@ const Main:FC = () => {
     dispatch(updateData);
   }
 
+  const deleteTask = (task:Task) => {
+    const deleteData:UpdateAction = {
+      tasks: [task],
+      status: task.status,
+      action: 'delete'
+    }
+    dispatch(deleteData);
+  }
+
   return (
     <MainRoot>
       <MainTitle>#ToDo</MainTitle>
@@ -76,14 +85,17 @@ const Main:FC = () => {
       <TaskList 
         title={'to do'} 
         addTaskHandler={addTask}
+        deleteTaskHandler={deleteTask}
         tasks={state.todoTasks} />
       <TaskList 
         title={'in progress'} 
         addTaskHandler={addTask}
+        deleteTaskHandler={deleteTask}
         tasks={state.inProgressTasks} />
       <TaskList 
         title={'completed'} 
         addTaskHandler={addTask}
+        deleteTaskHandler={deleteTask}
         tasks={state.completedTasks} />
       </TaskMainContainer>
     </MainRoot>

@@ -12,11 +12,12 @@ const AddTaskButton = styled(AddTaskButtonStyled)``
 
 type Props = {
   addTaskHandler:Function
+  deleteTaskHandler:Function
   tasks:Array<TaskType>
   title:string
 }
 
-const TaskList:FC<Props> = ({ title, addTaskHandler, tasks }) => {
+const TaskList:FC<Props> = ({ title, addTaskHandler, deleteTaskHandler, tasks }) => {
 
   const [showingAdd, showAdd] = useState<boolean>(false);
 
@@ -34,7 +35,7 @@ const TaskList:FC<Props> = ({ title, addTaskHandler, tasks }) => {
       <TaskListTitle>{title}</TaskListTitle>
       <TasksContainer>
         {tasks.map((task, index) => 
-          <Task key={index} { ...task }/>
+          <Task key={index} task={task} handlerDelete={deleteTaskHandler} />
         )}
       </TasksContainer>
       {(showingAdd 
